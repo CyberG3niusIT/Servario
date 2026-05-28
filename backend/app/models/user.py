@@ -20,7 +20,7 @@ class User(Base, UUIDMixin, TimestampMixin):
     password_hash: Mapped[str] = mapped_column(String(255), nullable=False)
     display_name: Mapped[str | None] = mapped_column(String(255))
     role: Mapped[UserRole] = mapped_column(
-        Enum(UserRole), nullable=False, default=UserRole.STAFF
+        Enum(UserRole, values_callable=lambda x: [e.value for e in x]), nullable=False, default=UserRole.STAFF
     )
     is_active: Mapped[bool] = mapped_column(Boolean, nullable=False, default=True)
 

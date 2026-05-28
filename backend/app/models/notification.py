@@ -33,16 +33,16 @@ class Notification(Base, UUIDMixin):
         UUID(as_uuid=True), ForeignKey("bookings.id", ondelete="CASCADE"), nullable=False
     )
     notification_type: Mapped[NotificationType] = mapped_column(
-        Enum(NotificationType), nullable=False
+        Enum(NotificationType, values_callable=lambda x: [e.value for e in x]), nullable=False
     )
     channel: Mapped[NotificationChannel] = mapped_column(
-        Enum(NotificationChannel), nullable=False, default=NotificationChannel.EMAIL
+        Enum(NotificationChannel, values_callable=lambda x: [e.value for e in x]), nullable=False, default=NotificationChannel.EMAIL
     )
     # Snapshot at send time — customer email may later be GDPR-nulled
     recipient_email: Mapped[str] = mapped_column(String(255), nullable=False)
     sent_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
     status: Mapped[NotificationStatus] = mapped_column(
-        Enum(NotificationStatus), nullable=False, default=NotificationStatus.PENDING
+        Enum(NotificationStatus, values_callable=lambda x: [e.value for e in x]), nullable=False, default=NotificationStatus.PENDING
     )
     error_message: Mapped[str | None] = mapped_column(Text)
 

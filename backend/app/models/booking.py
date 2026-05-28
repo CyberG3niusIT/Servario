@@ -32,7 +32,7 @@ class Booking(Base, UUIDMixin, TimestampMixin):
     start_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     end_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), nullable=False)
     status: Mapped[BookingStatus] = mapped_column(
-        Enum(BookingStatus), nullable=False, default=BookingStatus.PENDING
+        Enum(BookingStatus, values_callable=lambda x: [e.value for e in x]), nullable=False, default=BookingStatus.PENDING
     )
     customer_notes: Mapped[str | None] = mapped_column(Text)
     internal_notes: Mapped[str | None] = mapped_column(Text)

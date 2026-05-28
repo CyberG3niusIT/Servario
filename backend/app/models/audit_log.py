@@ -21,7 +21,7 @@ class AuditLog(Base, UUIDMixin):
     __tablename__ = "audit_logs"
 
     actor_type: Mapped[AuditActorType] = mapped_column(
-        Enum(AuditActorType), nullable=False
+        Enum(AuditActorType, values_callable=lambda x: [e.value for e in x]), nullable=False
     )
     actor_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True))
     action: Mapped[str] = mapped_column(String(128), nullable=False, index=True)

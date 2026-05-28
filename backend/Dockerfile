@@ -9,10 +9,10 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-RUN chown -R servario:servario /app
+RUN chown -R servario:servario /app && chmod +x /app/start.sh
 
 USER servario
 
 EXPOSE 8000
 
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["/app/start.sh"]

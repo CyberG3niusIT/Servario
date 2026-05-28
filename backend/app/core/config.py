@@ -1,4 +1,7 @@
+import json
 from functools import lru_cache
+
+from pydantic import computed_field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -11,7 +14,8 @@ class Settings(BaseSettings):
     # Application
     secret_key: str
     environment: str = "production"
-    allowed_origins: list[str] = ["http://localhost:3000"]
+    # Kommagetrennte oder JSON-Array-Zeichenkette, z.B. "http://a.com,http://b.com"
+    allowed_origins: str = "http://localhost:3000"
 
     # License
     servario_license_key: str = ""
@@ -24,6 +28,14 @@ class Settings(BaseSettings):
     smtp_port: int = 587
     smtp_user: str = ""
     smtp_password: str = ""
+
+    @computed_field  # type: ignore[misc]
+    @property
+    def cors_origins(self) -> list[str]:
+        s = self.allowed_origins.strip()
+        if s.startswith("["):
+            return json.loads(s)
+        return [o.strip() for o in s.split(",") if o.strip()]
 
     @property
     def is_development(self) -> bool:

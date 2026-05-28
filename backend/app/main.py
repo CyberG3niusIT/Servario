@@ -5,6 +5,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
 
+import app.models  # noqa: F401 – alle Mapper registrieren bevor Router geladen werden
 from app.api.v1.router import api_router
 from app.core.config import get_settings
 from app.core.license import get_or_create_instance_id, initialize_license, LicenseStatus
@@ -60,7 +61,7 @@ app.add_middleware(
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=settings.allowed_origins,
+    allow_origins=settings.cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
