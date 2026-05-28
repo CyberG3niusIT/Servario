@@ -6,6 +6,7 @@ import { clsx } from "clsx";
 import {
   CalendarDays,
   Layers,
+  Settings,
   Users,
   ShieldCheck,
   LogOut,
@@ -16,6 +17,7 @@ const navItems = [
   { href: "/admin/bookings",     label: "Buchungen",      icon: CalendarDays },
   { href: "/admin/services",     label: "Leistungen",     icon: Layers },
   { href: "/admin/team-members", label: "Team",           icon: Users },
+  { href: "/admin/settings",     label: "Einstellungen",  icon: Settings },
   { href: "/admin/license",      label: "Lizenz",         icon: ShieldCheck },
 ];
 

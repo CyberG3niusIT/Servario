@@ -3,13 +3,14 @@ import uuid
 from fastapi import APIRouter, Depends, HTTPException, Query, status
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.api.deps.auth import get_current_user
 from app.db.session import get_db
 from app.models.booking import Booking, BookingStatus
 from app.models.user import User
 from app.schemas.booking import BookingAdminUpdate, BookingRead
-from app.services import audit
+from app.services import audit, notifications
 from app.models.audit_log import AuditActorType
 
 router = APIRouter(prefix="/api/admin/bookings", tags=["admin-bookings"])
@@ -118,5 +119,22 @@ async def cancel_booking(
         actor_id=current_user.id,
     )
     await db.commit()
-    await db.refresh(booking)
+
+    # Absage-E-Mail versenden
+    result = await db.execute(
+        select(Booking)
+        .options(
+            selectinload(Booking.service),
+            selectinload(Booking.team_member),
+            selectinload(Booking.customer),
+        )
+        .where(Booking.id == booking.id)
+    )
+    booking = result.scalar_one()
+    try:
+        await notifications.send_cancellation(db, booking)
+        await db.commit()
+    except Exception:
+        pass
+
     return booking

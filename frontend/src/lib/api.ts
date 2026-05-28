@@ -3,6 +3,8 @@ import type {
   AvailabilityRuleCreate,
   Booking,
   BookingStatus,
+  InstanceSettings,
+  InstanceSettingsUpdate,
   LicenseStatus,
   Service,
   ServiceCreate,
@@ -118,6 +120,17 @@ export const bookings = {
     request<Booking>(`/admin/bookings/${id}/cancel`, { method: "POST" }),
   update: (id: string, data: { internal_notes?: string | null }) =>
     request<Booking>(`/admin/bookings/${id}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
+};
+
+// ── Einstellungen ─────────────────────────────────────────────────────────────
+
+export const settings = {
+  get: () => request<InstanceSettings>("/admin/settings"),
+  update: (data: InstanceSettingsUpdate) =>
+    request<InstanceSettings>("/admin/settings", {
       method: "PATCH",
       body: JSON.stringify(data),
     }),

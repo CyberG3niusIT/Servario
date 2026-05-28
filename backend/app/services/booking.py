@@ -15,13 +15,14 @@ from datetime import timedelta
 from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
 
 from app.core.license import LicenseStatus, get_license_state
 from app.models.booking import Booking, BookingStatus
 from app.models.customer import Customer
 from app.models.service import Service
 from app.schemas.booking import PublicBookingCreate
-from app.services import audit
+from app.services import audit, notifications
 from app.models.audit_log import AuditActorType
 
 
@@ -108,5 +109,24 @@ async def create_public_booking(
     )
 
     await db.commit()
-    await db.refresh(booking)
+
+    # Reload with relationships for notification rendering
+    result = await db.execute(
+        select(Booking)
+        .options(
+            selectinload(Booking.service),
+            selectinload(Booking.team_member),
+            selectinload(Booking.customer),
+        )
+        .where(Booking.id == booking.id)
+    )
+    booking = result.scalar_one()
+
+    # Bestätigungs-E-Mail asynchron versenden (Fehler werden geloggt, nicht weitergeworfen)
+    try:
+        await notifications.send_confirmation(db, booking)
+        await db.commit()
+    except Exception:
+        pass
+
     return booking

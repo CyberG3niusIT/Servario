@@ -98,6 +98,35 @@ export interface PublicBookingCreate {
   customer_notes?: string | null;
 }
 
+// ── Instanz-Einstellungen ─────────────────────────────────────────────────────
+export interface InstanceSettings {
+  business_name: string | null;
+  business_email: string | null;
+  business_phone: string | null;
+  business_address: string | null;
+  booking_page_title: string | null;
+  booking_page_description: string | null;
+  timezone: string;
+  smtp_host: string | null;
+  smtp_port: number | null;
+  smtp_user: string | null;
+  smtp_configured: boolean;
+}
+
+export interface InstanceSettingsUpdate {
+  business_name?: string | null;
+  business_email?: string | null;
+  business_phone?: string | null;
+  business_address?: string | null;
+  booking_page_title?: string | null;
+  booking_page_description?: string | null;
+  timezone?: string | null;
+  smtp_host?: string | null;
+  smtp_port?: number | null;
+  smtp_user?: string | null;
+  smtp_password?: string | null;
+}
+
 // ── Lizenzstatus ──────────────────────────────────────────────────────────────
 export type LicenseStatusValue =
   | "missing"

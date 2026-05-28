@@ -2,6 +2,7 @@ from fastapi import APIRouter
 
 from app.api.v1.endpoints import (
     admin_bookings,
+    admin_settings,
     auth,
     health,
     license_status,
@@ -19,3 +20,4 @@ api_router.include_router(services.router)
 api_router.include_router(team_members.router)
 api_router.include_router(admin_bookings.router)
 api_router.include_router(public_booking.router)
+api_router.include_router(admin_settings.router)
