@@ -1,0 +1,25 @@
+Business Source License 1.1
+
+Licensor:             [INSERT LEGAL NAME OR ENTITY]
+Licensed Work:        Servario
+                      The Licensed Work is (c) 2026 [INSERT LEGAL NAME OR ENTITY]
+Additional Use Grant: You may use the Licensed Work in non-production environments
+                      (development, testing, continuous integration, evaluation)
+                      without a commercial license.
+Change Date:          Four years from the release date of each major version.
+Change License:       Apache License, Version 2.0
+
+--------------------------------------------------------------------------------
+
+FULL LICENSE TEXT
+
+The full text of the Business Source License 1.1 is available at:
+https://mariadb.com/bsl11/
+
+Replace this section with the complete BUSL-1.1 text before the first
+public release. Fill in the Licensor name and confirm the Change Date.
+
+--------------------------------------------------------------------------------
+
+For production use, a commercial license is required.
+Licenses are available from the project maintainer.
