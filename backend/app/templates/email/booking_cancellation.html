@@ -1,0 +1,27 @@
+{% extends "email/base.html" %}
+{% block body %}
+<h2>Terminabsage</h2>
+<p>Hallo {{ customer_name }},<br>
+Ihr folgender Termin wurde abgesagt:</p>
+
+<div class="detail-box">
+  <div class="detail-row">
+    <span class="detail-label">Leistung</span>
+    <span class="detail-value">{{ service_name }}</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">Mitarbeiter</span>
+    <span class="detail-value">{{ team_member_name }}</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">Datum</span>
+    <span class="detail-value">{{ start_date }}</span>
+  </div>
+  <div class="detail-row">
+    <span class="detail-label">Uhrzeit</span>
+    <span class="detail-value">{{ start_time }} – {{ end_time }} Uhr</span>
+  </div>
+</div>
+
+<p>Für einen neuen Termin besuchen Sie bitte unsere Buchungsseite oder kontaktieren Sie uns direkt.</p>
+{% endblock %}

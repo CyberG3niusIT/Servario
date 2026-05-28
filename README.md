@@ -9,7 +9,7 @@
 </p>
 
 <p align="center">
-  Servario is an open-source scheduling system for managing services, calendars, team availability, customer bookings, roles, APIs, automations and integrations in one modular architecture.
+  Servario is a source-available scheduling system for managing services, calendars, team availability, customer bookings, roles, APIs, automations and integrations in one modular architecture.
 </p>
 
 <p align="center">
@@ -25,10 +25,11 @@
 </p>
 
 <p align="center">
-  <img alt="License" src="https://img.shields.io/badge/license-AGPL--3.0-6E7FF3?style=flat-square">
+  <img alt="License" src="https://img.shields.io/badge/license-Source%20Available-6E7FF3?style=flat-square">
+  <img alt="Production Use" src="https://img.shields.io/badge/production%20use-requires%20license-E8624A?style=flat-square">
   <img alt="Status" src="https://img.shields.io/badge/status-early%20planning-8A8F98?style=flat-square">
   <img alt="Self Hosted" src="https://img.shields.io/badge/self--hosted-first-2BBBAD?style=flat-square">
-  <img alt="Open Source" src="https://img.shields.io/badge/open--source-auditable-9B6DFF?style=flat-square">
+  <img alt="Source" src="https://img.shields.io/badge/source-auditable-9B6DFF?style=flat-square">
 </p>
 
 ---
@@ -56,7 +57,7 @@ Servario is not intended to be a decorative SaaS clone. It is built around clear
 
 > Servario is currently in the early project definition phase.
 
-The repository is being prepared as an open-source project. Core concepts, visual direction, terminology, motion principles and architecture boundaries are being defined before implementation begins.
+The repository is being prepared as a source-available project. Core concepts, visual direction, terminology, motion principles and architecture boundaries are being defined before implementation begins.
 
 | Area | Status |
 |---|---|
