@@ -15,9 +15,8 @@ export interface Service {
   name: string;
   description: string | null;
   duration_minutes: number;
-  price_cents: number | null;
+  price: string | null;   // Decimal-Wert als String (z.B. "49.90")
   currency: string | null;
-  color: string | null;
   is_active: boolean;
 }
 
@@ -25,9 +24,8 @@ export interface ServiceCreate {
   name: string;
   description?: string | null;
   duration_minutes: number;
-  price_cents?: number | null;
+  price?: string | null;
   currency?: string | null;
-  color?: string | null;
   is_active?: boolean;
 }
 
@@ -40,7 +38,7 @@ export interface TeamMember {
   email: string | null;
   bio: string | null;
   is_active: boolean;
-  service_ids: string[];
+  user_id: string | null;
 }
 
 export interface TeamMemberCreate {
@@ -82,6 +80,22 @@ export interface Booking {
   status: BookingStatus;
   customer_notes: string | null;
   internal_notes: string | null;
+}
+
+// ── Öffentliche Buchung ───────────────────────────────────────────────────────
+export interface AvailabilitySlot {
+  start_at: string;
+  end_at: string;
+}
+
+export interface PublicBookingCreate {
+  service_id: string;
+  team_member_id: string;
+  start_at: string;
+  customer_name: string;
+  customer_email?: string | null;
+  customer_phone?: string | null;
+  customer_notes?: string | null;
 }
 
 // ── Lizenzstatus ──────────────────────────────────────────────────────────────

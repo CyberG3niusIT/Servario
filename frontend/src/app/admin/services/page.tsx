@@ -13,14 +13,14 @@ type FormData = {
   name: string;
   description: string;
   duration_minutes: string;
-  price_cents: string;
+  price: string;        // Dezimalzahl als String, z.B. "49.90"
   currency: string;
   is_active: boolean;
 };
 
 const EMPTY_FORM: FormData = {
   name: "", description: "", duration_minutes: "60",
-  price_cents: "", currency: "EUR", is_active: true,
+  price: "", currency: "EUR", is_active: true,
 };
 
 function serviceToForm(s: Service): FormData {
@@ -28,7 +28,7 @@ function serviceToForm(s: Service): FormData {
     name: s.name,
     description: s.description ?? "",
     duration_minutes: String(s.duration_minutes),
-    price_cents: s.price_cents != null ? String(s.price_cents) : "",
+    price: s.price ?? "",
     currency: s.currency ?? "EUR",
     is_active: s.is_active,
   };
@@ -39,10 +39,15 @@ function formToPayload(f: FormData): ServiceCreate {
     name: f.name,
     description: f.description || null,
     duration_minutes: parseInt(f.duration_minutes, 10),
-    price_cents: f.price_cents ? parseInt(f.price_cents, 10) : null,
-    currency: f.price_cents ? f.currency || "EUR" : null,
+    price: f.price || null,
+    currency: f.price ? f.currency || "EUR" : null,
     is_active: f.is_active,
   };
+}
+
+function formatPrice(s: Service): string {
+  if (s.price == null) return "—";
+  return `${parseFloat(s.price).toFixed(2)} ${s.currency ?? "EUR"}`;
 }
 
 export default function ServicesPage() {
@@ -106,8 +111,8 @@ export default function ServicesPage() {
     }
   }
 
-  const field = (key: keyof FormData) => ({
-    value: String(form[key]),
+  const field = (key: keyof Omit<FormData, "is_active">) => ({
+    value: form[key],
     onChange: (e: React.ChangeEvent<HTMLInputElement>) =>
       setForm((f) => ({ ...f, [key]: e.target.value })),
   });
@@ -142,11 +147,7 @@ export default function ServicesPage() {
                 <tr key={s.id} className="hover:bg-gray-50 transition-colors">
                   <td className="px-4 py-3 font-medium text-gray-900">{s.name}</td>
                   <td className="px-4 py-3 text-gray-600">{s.duration_minutes} Min.</td>
-                  <td className="px-4 py-3 text-gray-600">
-                    {s.price_cents != null
-                      ? `${(s.price_cents / 100).toFixed(2)} ${s.currency ?? "EUR"}`
-                      : "—"}
-                  </td>
+                  <td className="px-4 py-3 text-gray-600">{formatPrice(s)}</td>
                   <td className="px-4 py-3">
                     <Badge variant={s.is_active ? "green" : "gray"}>
                       {s.is_active ? "Aktiv" : "Inaktiv"}
@@ -188,11 +189,12 @@ export default function ServicesPage() {
             />
             <Input
               id="price"
-              label="Preis (Cent)"
+              label="Preis (z.B. 49.90)"
               type="number"
               min={0}
-              placeholder="z.B. 5000"
-              {...field("price_cents")}
+              step="0.01"
+              placeholder="optional"
+              {...field("price")}
             />
           </div>
           <label className="flex items-center gap-2 text-sm cursor-pointer">
