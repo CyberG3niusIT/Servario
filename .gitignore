@@ -35,12 +35,14 @@ yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 .npm
+.npm-cache/
 
 # Docker
 *.log
 
 # IDE
 .vscode/
+.codex
 .idea/
 *.swp
 *.swo
