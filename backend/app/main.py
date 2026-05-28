@@ -3,6 +3,7 @@ from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
 from app.api.v1.router import api_router
 from app.core.config import get_settings
@@ -46,6 +47,15 @@ app = FastAPI(
     lifespan=lifespan,
     docs_url="/api/docs" if settings.is_development else None,
     redoc_url="/api/redoc" if settings.is_development else None,
+)
+
+app.add_middleware(
+    SessionMiddleware,
+    secret_key=settings.secret_key,
+    session_cookie="servario_session",
+    max_age=86400 * 14,  # 14 days
+    same_site="lax",
+    https_only=not settings.is_development,
 )
 
 app.add_middleware(
